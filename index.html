@@ -67,9 +67,18 @@
         /*because the parent div has a height of 200% if its parent st 100px this will be 100 px to make it 50% smaller than 200px which is 100px*/
       }
       .game-square > div > div:first-child {
+        /*target nested 2 levels down from the .game-quare element*/
+        /*this is targeting the first child(the one to the closest to the top) which will have the the "Default" square color( the one before jquery work is done) the 2nd child will slide up to replace this one
+        using nth-child (div(parent):nth-child(n)) would target the element that far down from its parent
+        in this case the first element
+        */
         background-color: gray;
+          /*after being targeted its color is now grey and the rows on bottom should over lap the previus 2nd child from the preceding row, becuase they technically share the same space
+          highlight by inspecting the dom for example
+          */
       }
       .flip > div {
+
         top: -100%;
       }
       .square-0 {
