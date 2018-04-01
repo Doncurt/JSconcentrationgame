@@ -376,6 +376,8 @@
           gameSquares.push(new GameSquare(array[i], color));
         }
       }
+
+        setupGame();
     /*  When you click on a square the game needs to ask:
       Is this the first square you clicked on? if so save this square.
       If this is not this is the second square you clicked on compare the colors of the first and the second squares clicked. Do they match? If so, lock them both, if not close them both. */
@@ -417,6 +419,7 @@
       }
       /*RANDOMIZES COLORS*/
       function randomizeColors() {
+        /*This is similar to our set up function. Get some random colors, then loop through all of the game squares, for each game pull a random color out of the random colors and set the color of the game square.*/
         var randomColors = getSomeColors();
         /*Uses the GetSomeColors method to get a random color from the colors method at the top*/
         gameSquares.forEach(function(gameSquare) {
@@ -425,9 +428,24 @@
           /*Used to insert or replace elements. in this case its inserted at a random position to replace one elements color in the first game square object, this then goes around for the rest*/
           gameSquare.setColor(color);
           /*after the random is done it sets the randomized color to the game square in question in the foreach loop. this will thrn repeat with the other elements*/
-        });
-      }
-      setupGame();
+          });
+        }
+
+
+
+        function clearGame() {
+          gameSquares.forEach(function(gameSquare) {
+            /*loops through each one go the games square objects in the array and:*/
+            gameSquare.reset();
+            /*resets them by setting them to open and unlocked*/
+          });
+          setTimeout(function() {
+            randomizeColors();
+            /*re randomizes the colors*/
+          }, 500);
+          /*but only does so afrer 500 miliseconds*/
+        }
+
     </script>
   </body>
 </html>
