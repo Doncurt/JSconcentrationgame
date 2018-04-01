@@ -39,6 +39,7 @@
         position: relative;
           /*Element is positioned relative to its normal position,*/
         overflow: hidden;
+        /*hidden	The overflow is clipped, and the rest of the content will be invisible if not inside the bounds of the box*/
       }
       .game-square > div {
         /* (Nested 1 layer down from .game-square aka the  first child)
@@ -268,7 +269,37 @@
           this.el.addEventListener("click", this, false);
           /* This line adds an event listener that listens for "click" type events. when the square is clicked something should only happen to the particular square that was clicked*/
         }
+      /* Definition of GameSquare objects functions py use of function prototyping*/
+       /*Game Squares need to do the following:
 
+         1. Handle events when they occur.(In this case when clicks happen) We are listening for events but we also need to define what happens when those events occur.
+         2.Reset Game Square.(using the  button 'reset-button') This will set the game square back to it's starting state. This will be helpful when want to start the game again.
+         3.Lock, when we find a match we will want to lock those game squares.( so no other events other than reset have an affect on them)
+         4. Set Color, this will be useful when we restart the game, we want to change the colors and set a new color for each game square.
+        */
+        /*when either the  game squares  or the reset button are clicked*/
+        GameSquare.prototype.handleEvent = function(e) {
+          /*Callled with a click event occurr*/
+            switch (e.type) {
+              /*when the event is triggered to drop into this function, it checks the type of the click*/
+              case "click":
+                /*if the event type is a click*/
+                if (this.isOpen || this.isLocked) {
+                  // When a click occurs check to see if the square is already opened (isOpen == true) or (||) if the square is locked (isLocked == true). If either of the cases is true can ignore the click.
+                  return;
+                }
+                this.isOpen = true;
+                /*if the square isnt opened (It still hasnt been slid upto the 2nd child due to being clicked)*/
+                this.el.classList.add('flip');
+                /*add the classs of flip which will make the (.game-square > div > div) slide up 100px and reveal the 2nd element*/
+            }
+          }
+
+          GameSquare.prototype.reset = function() {
+              this.isOpen = false;
+              this.isLocked = false;
+              this.el.classList.remove('flip');
+            }
     </script>
   </body>
 </html>
