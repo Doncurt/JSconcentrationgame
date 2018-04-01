@@ -61,6 +61,7 @@
           */
         top: 0;
           /* There should be no space bewteen the top of this element and the top of the page*/
+        transition: 400ms; /* allows you to change property values smoothly (from one value to another), over a given duration. in this case wit will fo from its regulat position to flipped which will make its top -100px and raise it that much */
       }
       .game-square > div > div {
         /*targets the div nested two levels below the top level game square*/
@@ -325,6 +326,57 @@
               this.el.children[0].children[1].classList.add(color);
               /*adds those new colors from the array into the class for the new colors*/
             }
+
+    /*GAME SET UP!*/
+
+    var gameSquares = [];
+    /* the array that we will push the game squares into. untill modified it is set to 16 squares(index
+    0-15)*/
+
+    function random(n) {
+      /* Helper function that returns between 0 and and integeter version(useing math.random) for any valu passed in
+      This function returns a number from 0 to n - 1.Becuase theres are all the 0 indexes that we need
+      */
+        return Math.floor(Math.random() * n);
+      }
+
+
+      function getSomeColors() {
+        var colorscopy = colors.slice();
+        /*this pulls from the color array. the .slice method on arrays works like pythons, but if its empty it just makes a copy, which is what we need*/
+        var randomColors = [];
+        /*Then define a new empty array: randomColors. */
+        for (var i = 0; i < 8; i++) {
+          /*loop 8 times. */
+          var index = random(colorscopy.length);
+          /*With each loop get a random index number from 0 to the length of colorsCopy. This is the index of the color we want from the copy of the colors.*/
+          randomColors.push(colorscopy.splice(index, 1)[0]);
+          /* Using Array.splice() we remove the item at that index and add to randomArray with Array.push().*/
+        }
+        return randomColors.concat(randomColors.slice());
+        /*last step is double the items in the randomArray with Array.slice() to make a copy, and Array.concat() to append the new array on the end. Then return this new array that has the same list repeated.example [8,3,7,8,4,3,5,9,8,3,7,8,4,3,5,9] becuase the original randomColors array was [8,3,7,8,4,3,5,9]*/
+      }
+
+      /* Assiging random numbers
+
+      */
+      function setupGame() {
+        var array = document.getElementsByClassName("game-square");
+        /*This function gets a reference to all of the divs with the class .game-square
+        it counts all of the occurences of the divs with class .game-square
+        */
+        var randomColors = getSomeColors();             // Get an array of 8 random color pairs
+        for (var i = 0; i < array.length; i++) {
+          var index = random(randomColors.length);      // Get a random index
+          var color = randomColors.splice(index, 1)[0]; // Get the color at that index
+          // Use that color to initialize the GameSquare
+          gameSquares.push(new GameSquare(array[i], color));
+        }
+      }
+    /*  When you click on a square the game needs to ask:
+      Is this the first square you clicked on? if so save this square.
+      If this is not this is the second square you clicked on compare the colors of the first and the second squares clicked. Do they match? If so, lock them both, if not close them both. */
+      setupGame();
     </script>
   </body>
 </html>
