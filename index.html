@@ -268,6 +268,7 @@
           /* locked or unlocked: Locked will identify a square as having been matched. In this case we can ignore clicks/taps, and the square stays open.*/
           this.el.addEventListener("click", this, false);
           /* This line adds an event listener that listens for "click" type events. when the square is clicked something should only happen to the particular square that was clicked*/
+          this.setColor(color); /* when the object is instatiated it gets a new round of colors from the color array*/
         }
       /* Definition of GameSquare objects functions py use of function prototyping*/
        /*Game Squares need to do the following:
@@ -310,7 +311,20 @@
               this.isLocked = true;
               this.isOpen = true;
             }
-            
+
+
+          GameSquare.prototype.setColor = function(color) {
+              /* When the game is reset the colors need to be shuffled, set color allows us assign a new color to each square. This requires that we remove the color class from the second nest div, and add the new color to that div. the el.children targets the children class*/
+              this.el.children[0].children[1].classList.remove(this.color);
+              /* removed color from its list of classes that it has, so turns it back to its default color
+              this.el.children[0] : the game square's child, the "drawer"or "default" div.
+              this.el.children[0].children[1] : the second child of the drawer div, this should be the color square or the one below it.
+              */
+              this.color = color;
+              /*gets a new set of colors from the collors array*/
+              this.el.children[0].children[1].classList.add(color);
+              /*adds those new colors from the array into the class for the new colors*/
+            }
     </script>
   </body>
 </html>
