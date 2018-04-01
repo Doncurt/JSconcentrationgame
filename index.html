@@ -5,7 +5,7 @@
     <style>
       /* CSS here */
       #game {
-        /* Logic of board design: the .game-square element will take up 1/4 of the total space in this element 400px works as we want a 4x4 grid .game-squares right sandwiched next to eachother*/
+        /* Logic of board design: the .game-square element will take up 1/16 of the total space in this element 400px( game-squares will be 100 px by 100px)ss we want a 4x4 grid .game-squares right sandwiched next to eachother*/
 
         width: 400px;
             /* to make the square 400px*/
@@ -69,7 +69,7 @@
         /*because the parent div has a height of 200% if its parent st 100px this will be 100 px to make it 50% smaller than 200px which is 100px*/
       }
       .game-square > div > div:first-child {
-        /*target nested 2 levels down from the .game-quare element*/
+        /*target nested 2 levels down from the .game-square element*/
         /*this is targeting the first child(the one to the closest to the top) which will have the the "Default" square color( the one before jquery work is done) the 2nd child will slide up to replace this one
         using nth-child (div(parent):nth-child(n)) would target the element that far down from its parent
         in this case the first element
@@ -128,8 +128,9 @@
       .square-9 {
         background-color: cornflowerblue;
       }
-
-    </style>
+      @@media only screen and (max-width: 600px)  {
+    }
+         </style>
   </head>
   <body>
     <div class='container'>
@@ -294,6 +295,8 @@
                 /*if the square isnt opened (It still hasnt been slid upto the 2nd child due to being clicked)*/
                 this.el.classList.add('flip');
                 /*add the classs of flip which will make the (.game-square > div > div) slide up 100px and reveal the 2nd element*/
+                checkGame(this);
+                /*starts the checkGame function to find out is this particular squarethat was clicked on( event triggered) has not been clocked before and therefore has no color*/
             }
           }
           /*LOGIC FOR RESET BUTTON*/
@@ -330,7 +333,7 @@
     /*GAME SET UP!*/
 
     var gameSquares = [];
-    /* the array that we will push the game squares into. untill modified it is set to 16 squares(index
+    /* the array  of objectsthat we will push the game squares into and inerate over to access their propertires. unless modified it is set to 16 squares(index
     0-15)*/
 
     function random(n) {
@@ -376,6 +379,54 @@
     /*  When you click on a square the game needs to ask:
       Is this the first square you clicked on? if so save this square.
       If this is not this is the second square you clicked on compare the colors of the first and the second squares clicked. Do they match? If so, lock them both, if not close them both. */
+
+      var firstSquare = null;
+    /*  First add a var to keep track of the first square you click.*/
+
+    function checkGame(gameSquare) {
+      /*Takes GameSquare object  as an argument so it can utilize it's methods to fo the game logic*/
+        if (firstSquare === null) {
+          /*The first step is to check if this is the first square clicked. If firstSquare is null:*/
+
+          firstSquare = gameSquare;
+          /* in that case set firstSquare to gameSquare.*/
+          return /*after this is done go to the next line of code*/
+        }
+
+        if (firstSquare.color === gameSquare.color) {
+          /* If firstSquare is not null we need to ask if the color of firstSquare and gameSquare match, if so call GameSquare.lock() on both. If they don't match they both need to be closed. */
+          firstSquare.lock(); /*sets islocked and is open to true*/
+          gameSquare.lock(); /*sets is locked and is open to true*/
+        } else {
+          /* will happen before the animation that reveals the color has started! To close the square we can call GameSquare.reset() but this needs to happen after a short delay as defined by the set timeout anonymous function.*/
+
+          var a = firstSquare;
+          var b = gameSquare;
+
+          setTimeout(function() {
+            /*Using setTimeout() we can execute a function after a short delay but, there is a problem, the references to firstSquare and gameSquare will be lost. To preseve these they need to be assigned to a vars that are scoped to this function.*/
+            a.reset(); /*set to a variable scoped in this function, this will put this back to isopen==false and is locked==false so the .flip class will be removed from the game-square div*/
+            b.reset(); /*set to a variable scoped in this function, this will put this back to isopen==false and is locked==false so the .flip class will be removed from the game-square div*/
+            firstSquare = null;
+            /*sets the first squar back to null again*/
+          }, 400);
+          /*will wait for 400 miliseconds*/
+        }
+        firstSquare = null;
+        /*sets the first square back to null for the next function call*/
+      }
+      /*RANDOMIZES COLORS*/
+      function randomizeColors() {
+        var randomColors = getSomeColors();
+        /*Uses the GetSomeColors method to get a random color from the colors method at the top*/
+        gameSquares.forEach(function(gameSquare) {
+          /*what this is saying is that for each of the game suares in this array of objects:*/
+          var color = randomColors.splice(random(randomColors.length), 1)[0];
+          /*Used to insert or replace elements. in this case its inserted at a random position to replace one elements color in the first game square object, this then goes around for the rest*/
+          gameSquare.setColor(color);
+          /*after the random is done it sets the randomized color to the game square in question in the foreach loop. this will thrn repeat with the other elements*/
+        });
+      }
       setupGame();
     </script>
   </body>
