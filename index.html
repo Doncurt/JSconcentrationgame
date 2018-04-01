@@ -6,35 +6,58 @@
       /* CSS here */
       #game {
         /* Logic of board design: the .game-square element will take up 1/4 of the total space in this element 400px works as we want a 4x4 grid .game-squares right sandwiched next to eachother*/
-        /* to make the square 400px*/
+
         width: 400px;
-        /*to make the square 400px*/
+            /* to make the square 400px*/
         height: 400px;
-        /* extremely important, this  dislay:flex makes sure that all of its child elements will follow the next rule which is what direction it will be in*/
+            /*to make the square 400px*/
         display: flex;
-        /* this is telling the child elements that they now need to be in a row, before the next element tells this one what to do, they would all be in a long single line*/
+            /* Extremely important, this  dislay:flex makes sure that all of its direct child elements(.game-square) will follow the next couple of rules, which is what direction it will be in (flex-direction:row -- which will switch it from being a stack vertically to a row horizontally) and then to only fill space to the end of the boundaries of the #game div,( defined as 400px so each should take up 100px worth of space to get that grid), then go to the next row, filling 4 more until all 16 fit*/
+
         flex-direction: row;
-        /* this is now telling the direct child elements that they should wrap around when there is no more space to fit them on this current row. since this element is 400px wide and the .game-squares are 100px, this should put 4 of them on each row (a 4x4 grid)*/
+            /* this is telling the child elements that they now need to be in a row, before the next element tells this one what to do, they would all be in a long single line*/
         flex-wrap: wrap;
+            /* this is now telling the direct child elements that they should wrap around when there is no more space to fit them on this current row. since this element is 400px wide and the .game-squares are 100px, this should put 4 of them on each row (a 4x4 grid)*/
         border: 1px solid red;
       }
 
-      .game-square {/* Game square element(the one that will be targeted to change for the game mechanics with js) and the reference point for each of the > to identify the child elements*/
-        /* Notes on style: This will display in 4 rows of 4, this is */
+      .game-square {
+        /* Game square element(the one that will be targeted to change for the game mechanics with js) and the reference point for each of the > to identify the child elements*/
+        /* Notes on style: This will display in 4 rows of 4, #refrence #game to see how this is done */
+
         box-sizing: border-box;
+          /*Width and height apply to all parts of the element: content, padding and borders
+            this means including the border its final width and height are now 100px by 100px
+            EXTREMLY important for this to accurately fit inside the grid
+          */
         border: 1px solid #000;
+          /*Gives a border of 1px solid black*/
         width: 100px;
+          /*gives a total width including the border of 100px */
         height: 100px;
+          /*gives a total height including the border of 100px */
         position: relative;
+          /*Element is positioned relative to its normal position,*/
         overflow: hidden;
       }
-      .game-square > div {/* (Nested 1 layer down from .game-square aka the  first child)*/
+      .game-square > div {
+        /* (Nested 1 layer down from .game-square aka the  first child)
+        this will act like a "Drawer" for its child elements to slide in and out of hence why it is 200% taller than its parrent
+        */
         width: 100%;
+        /*tells you how wide relative to the original size of the element this should be,
+        in this case it just takes up 100% of the 100px of space
+        */
         height: 200%;
+          /*tells you how tall relative to the original size of the element this should be,
+          this needs to be twice as tall as its parent element to let the 2nd and first child
+          elements nested in it slide back and forth
+          */
         position: absolute;
         top: 0;
       }
-      .game-square > div > div {/*targets the div nest two levels below the top level game square*/
+      .game-square > div > div {
+        /*targets the div nest two levels below the top level game square*/
         height: 50%;
       }
       .game-square > div > div:first-child {
