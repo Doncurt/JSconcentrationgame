@@ -53,12 +53,18 @@
           this needs to be twice as tall as its parent element to let the 2nd and first child
           elements nested in it slide back and forth
           */
+
         position: absolute;
+          /* With absolute positioning, an element can be placed anywhere on a page.
+          in this case the next property's value is telling you that there should be no space from the top of the page
+          */
         top: 0;
+          /* There should be no space bewteen the top of this element and the top of the page*/
       }
       .game-square > div > div {
-        /*targets the div nest two levels below the top level game square*/
+        /*targets the div nested two levels below the top level game square*/
         height: 50%;
+        /*because the parent div has a height of 200% if its parent st 100px this will be 100 px to make it 50% smaller than 200px which is 100px*/
       }
       .game-square > div > div:first-child {
         background-color: gray;
