@@ -18,7 +18,8 @@
             /* this is telling the child elements that they now need to be in a row, before the next element tells this one what to do, they would all be in a long single line*/
         flex-wrap: wrap;
             /* this is now telling the direct child elements that they should wrap around when there is no more space to fit them on this current row. since this element is 400px wide and the .game-squares are 100px, this should put 4 of them on each row (a 4x4 grid)*/
-        border: 1px solid red;
+        /* border: 1px solid red; */
+        /*defined during programing to make sure everything fits*/
       }
 
       .game-square {
@@ -30,8 +31,9 @@
             this means including the border its final width and height are now 100px by 100px
             EXTREMLY important for this to accurately fit inside the grid
           */
-        border: 1px solid #000;
+        border: 10px solid #000;
           /*Gives a border of 1px solid black*/
+        border-radius: 20%;
         width: 100px;
           /*gives a total width including the border of 100px */
         height: 100px;
