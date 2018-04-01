@@ -83,6 +83,10 @@
         top: -100%;
         /*ifa applied slides it up 100px*/
       }
+
+      /*COLOR SECTION: this will be applied using jquery to apply random colors to random squares
+      There are only 9 colors here, becuase when we play the game it will only need 8 colors since there are 16 squares and every color will appear twice.
+      */
       .square-0 {
         background-color: aqua;
       }
@@ -227,11 +231,29 @@
         </div>
 
       </div>
-      <button id='reset-button'>reset</button><!--must but in the same container div as the #game div as  for the js to work correctly-->
+      <button id='reset-button'>reset</button><!--must but in the same container div as the #game div as  for the js to work correctly button needs an id so js can target it in a bit-->
     </div>
 
     <script>
       // JS Code here
+      /*targeting the DOM element with the id of 'reset-button'*/
+      var resetButton = document.getElementById("reset-button");
+      /*the reason that javascript is need is because we are goingto  use javascript to loop though the square-i (since there are nine colors we define and we started off with a 0 index of square-0) i will be any value 0-9 index*/
+      var colors = [];
+      /* COLOR aray for pushing the numbers for processing later*/
+      for (var i = 0; i < 10; i++) {
+        colors.push('square-' + i);
+        }
+
+      /*GAME OBJECT:
+      game will need to keep track of the element that represent each Game Square 
+       */
+      function GameSquare(el, color) {
+          this.el = el;
+          this.isOpen = false;
+          this.isLocked = false;
+          this.el.addEventListener("click", this, false);
+        }
 
     </script>
   </body>
