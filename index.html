@@ -78,8 +78,10 @@
           */
       }
       .flip > div {
-
+        /* set to negative, because if it is applied to the 2nd child( what it's targeting) it will slide the whole 50% of its parent ( which is 200(200px) of its parent 100px )
+        div(.game-square > div > div) up 100px */
         top: -100%;
+        /*ifa applied slides it up 100px*/
       }
       .square-0 {
         background-color: aqua;
