@@ -246,13 +246,27 @@
         }
 
       /*GAME OBJECT:
-      game will need to keep track of the element that represent each Game Square 
+      game will need to
+      1. keep track of the element that represent each Game Square
+      2. assign a "square-#" class to one of the nested div's in a Game Square(using the for loop)
+      3. get click/taps on a Game Square when they occur(check if the square has been clicked)
+      4. keep track of the state of each Game Square(check for change of state(a boolean value)
        */
       function GameSquare(el, color) {
+        /* This function defines a "GameSquare" class object and it's properties. It takes in two parameters: el, and color.
+        el : The reference to a DOM element. In our case a div.game-square.
+        color : The color of a square. This will be the class name that represents the color of the square i.e. "square-0" to "square-9".
+        */
           this.el = el;
+          /*makes sure than isntead of targeting every DOM object with this class, that it only
+          targets the SPECIFIC target that the event happened on
+          */
           this.isOpen = false;
+          /*open or closed: closed and we see the upper "default"(first-child) div, or open and we see the lower "color" div.*/
           this.isLocked = false;
+          /* locked or unlocked: Locked will identify a square as having been matched. In this case we can ignore clicks/taps, and the square stays open.*/
           this.el.addEventListener("click", this, false);
+          /* This line adds an event listener that listens for "click" type events. when the square is clicked something should only happen to the particular square that was clicked*/
         }
 
     </script>
