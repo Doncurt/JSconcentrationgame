@@ -294,12 +294,23 @@
                 /*add the classs of flip which will make the (.game-square > div > div) slide up 100px and reveal the 2nd element*/
             }
           }
-
+          /*LOGIC FOR RESET BUTTON*/
           GameSquare.prototype.reset = function() {
+            /*IF THE RESET BUTTON IS CLOCKED*/
               this.isOpen = false;
+              /* set all the opens to false*/
               this.isLocked = false;
+              /*set all of the locks to false as well to reset logic check in handle even*/
               this.el.classList.remove('flip');
+              /*remove any class that has been flipped(top: -100) back into place by removing that class*/
             }
+
+            /*When two squares are matched we'll call lock() on each. To lock a square we need to set is open to true and is locked to true*/
+          GameSquare.prototype.lock = function() {
+              this.isLocked = true;
+              this.isOpen = true;
+            }
+            
     </script>
   </body>
 </html>
